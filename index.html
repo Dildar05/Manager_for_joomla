@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>File Manager</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 20px;
+			}
+			.container {
+				display: flex;
+			}
+			.left,
+			.right {
+				flex: 1;
+				padding: 10px;
+			}
+			.right {
+				border-left: 1px solid #000;
+			}
+			label {
+				display: block;
+				margin-top: 10px;
+			}
+			button {
+				margin-top: 20px;
+			}
+			#output {
+				margin-top: 20px;
+			}
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				margin-top: 20px;
+			}
+			th,
+			td {
+				border: 1px solid #000;
+				padding: 8px;
+				text-align: center;
+			}
+			th {
+				background-color: #00b5fc;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="left">
+				<h1>File Manager</h1>
+				<label>
+					Путь к директории:
+					<input
+						type="file"
+						id="directoryPicker"
+						webkitdirectory
+						directory
+						multiple
+					/>
+				</label>
+				<label>
+					Каталог медиа менеджера:
+					<input type="text" id="mediaManagerPath" />
+				</label>
+				<label>
+					Тип сайта:
+					<select id="siteType">
+						<option value="1">Подсайт</option>
+						<option value="2">Сайт</option>
+					</select>
+				</label>
+				<label>
+					Тип менеджера:
+					<select id="managerType">
+						<option value="1">images-new</option>
+						<option value="2">images</option>
+					</select>
+				</label>
+				<button onclick="generateTable()">Сгенерировать таблицу</button>
+				<button onclick="copyToClipboard()">
+					Скопировать HTML в буфер обмена
+				</button>
+			</div>
+			<div class="right">
+				<h2>HTML Код Таблицы</h2>
+				<pre
+					id="htmlCode"
+					style="
+						white-space: pre-wrap;
+						background-color: #f4f4f4;
+						padding: 10px;
+					"
+				></pre>
+			</div>
+			<div id="output"></div>
+		</div>
+		<script src="script.js"></script>
+	</body>
+</html>
