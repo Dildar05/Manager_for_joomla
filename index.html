@@ -9,43 +9,53 @@
 				font-family: Arial, sans-serif;
 				margin: 20px;
 			}
+
 			.container {
 				display: flex;
 			}
+
 			.left,
 			.right {
 				flex: 1;
 				padding: 10px;
 			}
+
 			.right {
 				border-left: 1px solid #000;
 			}
+
 			label {
 				display: block;
 				margin-top: 10px;
 			}
+
 			button {
 				margin-top: 20px;
 			}
+
 			#output {
 				margin-top: 20px;
 			}
+
 			table {
 				width: 100%;
 				border-collapse: collapse;
 				margin-top: 20px;
 			}
+
 			th,
 			td {
 				border: 1px solid #000;
 				padding: 8px;
 				text-align: center;
 			}
+
 			th {
 				background-color: #00b5fc;
 			}
 		</style>
 	</head>
+
 	<body>
 		<div class="container">
 			<div class="left">
@@ -76,6 +86,13 @@
 					<select id="managerType">
 						<option value="1">images-new</option>
 						<option value="2">images</option>
+					</select>
+				</label>
+				<label>
+					Язык таблицы:
+					<select id="langType">
+						<option value="1">Казахский</option>
+						<option value="2">Русский</option>
 					</select>
 				</label>
 				<button onclick="generateTable()">Сгенерировать таблицу</button>

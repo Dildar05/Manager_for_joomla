@@ -9,6 +9,11 @@ function generateTable() {
 	const mediaManagerPath = document.getElementById('mediaManagerPath').value
 	const siteType = parseInt(document.getElementById('siteType').value)
 	const managerType = parseInt(document.getElementById('managerType').value)
+	const languageType = parseInt(document.getElementById('langType').value)
+
+	if (mediaManagerPath[mediaManagerPath.length - 1] === '/') {
+		mediaManagerPath = mediaManagerPath.slice(0, -1)
+	}
 
 	if (directoryInput.files.length === 0) {
 		alert('Пожалуйста, выберите директорию.')
@@ -23,14 +28,23 @@ function generateTable() {
 		let name = cleanName(file.name.replace(/\.[^/.]+$/, ''))
 		return { name, ext }
 	})
+	let name = ''
+	let down = ''
+	if (languageType == 1) {
+		name = 'Атауы'
+		down = 'Жүктеу'
+	} else {
+		name = 'Название'
+		down = 'Скачать'
+	}
 
 	let tableHtml = `
     <table class="cwd">
     <thead>
     <tr>
     <th>№</th>
-    <th>Название</th>
-    <th>Скачать</th>
+    <th>${name}</th>
+    <th>${down}</th>
     </tr>
     </thead>
     <tbody>
