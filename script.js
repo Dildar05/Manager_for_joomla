@@ -5,7 +5,7 @@ function cleanName(name) {
 }
 
 function generateTable() {
-	const directoryInput = document.getElementById('directoryPicker')
+	const fileInput = document.getElementById('filePicker')
 	let mediaManagerPath = document.getElementById('mediaManagerPath').value
 	const siteType = parseInt(document.getElementById('siteType').value)
 	const managerType = parseInt(document.getElementById('managerType').value)
@@ -14,18 +14,17 @@ function generateTable() {
 	// Удаление всех конечных слэшей из пути
 	mediaManagerPath = mediaManagerPath.replace(/\/+$/, '')
 
-	// Проверка, выбрана ли директория
-	if (directoryInput.files.length === 0) {
-		alert('Пожалуйста, выберите директорию.')
+	// Проверка, выбраны ли файлы
+	if (fileInput.files.length === 0) {
+		alert('Пожалуйста, выберите файлы.')
 		return
 	}
 
 	// Получение информации о файлах в порядке, в котором они выбраны пользователем
-	let files = Array.from(directoryInput.files).filter(
+	let files = Array.from(fileInput.files).filter(
 		file => file.name.toLowerCase() !== 'desktop.ini'
 	)
 
-	// Не сортируем файлы, сохраняем порядок выбора пользователем
 	let fileInfo = files.map(file => {
 		let ext = file.name.split('.').pop().toUpperCase()
 		let name = cleanName(file.name.replace(/\.[^/.]+$/, ''))
@@ -35,7 +34,7 @@ function generateTable() {
 	// Определение названий столбцов в зависимости от языка
 	let name = ''
 	let down = ''
-	if (languageType == 1) {
+	if (languageType === 1) {
 		name = 'Атауы'
 		down = 'Жүктеу'
 	} else {
@@ -45,16 +44,16 @@ function generateTable() {
 
 	// Начало формирования HTML таблицы
 	let tableHtml = `
-    <table class="cwd" unsortable>
-    <thead>
-    <tr>
-    <th>№</th>
-    <th>${name}</th>
-    <th>${down}</th>
-    </tr>
-    </thead>
-    <tbody>
-    `
+				<table class="cwd" unsortable>
+				<thead>
+				<tr>
+				<th>№</th>
+				<th>${name}</th>
+				<th>${down}</th>
+				</tr>
+				</thead>
+				<tbody>
+			`
 
 	// Генерация строк таблицы для каждого файла в порядке, в котором они выбраны пользователем
 	fileInfo.forEach((file, idx) => {
@@ -66,20 +65,20 @@ function generateTable() {
 				: file.ext
 
 		tableHtml += `
-        <tr>
-        <td>${idx + 1}</td>
-        <td>${file.name}</td>
-        <td><a href="${fullPath}" download>${typer}</a></td>
-        </tr>
-        `
+					<tr>
+					<td>${idx + 1}</td>
+					<td>${file.name}</td>
+					<td><a href="${fullPath}" download>${typer}</a></td>
+					</tr>
+				`
 	})
 
 	// Завершение формирования таблицы
 	tableHtml += `
-    </tbody>
-    </table>
-    <p> </p>
-    `
+				</tbody>
+				</table>
+				<p> </p>
+			`
 
 	// Вставка HTML таблицы в элемент с id 'output'
 	document.getElementById('output').innerHTML = tableHtml
