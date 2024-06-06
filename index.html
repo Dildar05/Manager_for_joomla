@@ -4,52 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>File Manager</title>
-		<style>
-			body {
-				font-family: Arial, sans-serif;
-				margin: 20px;
-			}
-			.container {
-				display: flex;
-			}
-			.left,
-			.right {
-				flex: 1;
-				padding: 10px;
-			}
-			.right {
-				border-left: 1px solid #000;
-			}
-			label {
-				display: block;
-				margin-top: 10px;
-			}
-			button {
-				margin-top: 20px;
-			}
-			#output {
-				margin-top: 20px;
-			}
-			table {
-				width: 100%;
-				border-collapse: collapse;
-				margin-top: 20px;
-			}
-			th,
-			td {
-				border: 1px solid #000;
-				padding: 8px;
-				text-align: center;
-			}
-			th {
-				background-color: #00b5fc;
-			}
-			pre {
-				white-space: pre-wrap;
-				background-color: #f4f4f4;
-				padding: 10px;
-			}
-		</style>
+		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
 		<div class="container">
@@ -86,15 +41,18 @@
 					</select>
 				</label>
 				<button onclick="generateTable()">Сгенерировать таблицу</button>
-				<button onclick="copyToClipboard()">
+				<button id="copyButton" onclick="copyToClipboard()">
 					Скопировать HTML в буфер обмена
 				</button>
 			</div>
-			<div class="right">
+			<div class="center">
 				<h2>HTML Код Таблицы</h2>
 				<pre id="htmlCode"></pre>
 			</div>
-			<div id="output"></div>
+			<div class="right">
+				<h2>Визуализация таблицы</h2>
+				<div id="output"></div>
+			</div>
 		</div>
 		<script src="script.js"></script>
 	</body>

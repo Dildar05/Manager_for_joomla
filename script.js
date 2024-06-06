@@ -5,14 +5,13 @@ function cleanName(name) {
 		.replace(/о\.ж/g, 'оқу жылы')
 		.replace(/ож/g, 'оқу жылы')
 
-	// Регулярное выражение для поиска года в различных форматах
-	const yearPattern = /(\d{2})([\s-]*)(\d{2})/g
+	// Замена двухзначных годов перед 'оқу жылы'
+	const yearPatternBefore = /(\d{2})\s*-\s*(\d{2})(?=\s*оқу жылы)/g
+	name = name.replace(yearPatternBefore, '20$1 - 20$2')
 
-	// Замена годов на корректный формат
-	name = name.replace(yearPattern, '20$1 - 20$3')
-
-	// Замена '-' на ' - '
-	name = name.replace(/-/g, ' - ')
+	// Замена любых двухзначных годов, не являющихся частью четырехзначных годов
+	const yearPattern = /\b(\d{2})\s*-\s*(\d{2})\b(?! - \d{4})/g
+	name = name.replace(yearPattern, '20$1 - 20$2')
 
 	// Возвращаем строку с заглавной буквы
 	return name.charAt(0).toUpperCase() + name.slice(1)
@@ -58,16 +57,16 @@ function generateTable() {
 
 	// Начало формирования HTML таблицы
 	let tableHtml = `
-                <table class="cwd" style="width: 100%;" border="1">
-                <thead>
-                <tr>
-                <th style="background-color: #00b5fc; text-align: center; width: 4.40639%;"><strong>№</strong></th>
-                <th style="background-color: #00b5fc; text-align: center; width: 86.6979%;"><strong>${name}</strong></th>
-                <th style="background-color: #00b5fc; text-align: center; width: 8.9207%;"><strong>${down}</strong></th>
-                </tr>
-                </thead>
-                <tbody>
-            `
+        <table class="cwd" style="width: 100%;" border="1">
+        <thead>
+        <tr>
+        <th style="background-color: #00b5fc; text-align: center; width: 4.40639%;"><strong>№</strong></th>
+        <th style="background-color: #00b5fc; text-align: center; width: 86.6979%;"><strong>${name}</strong></th>
+        <th style="background-color: #00b5fc; text-align: center; width: 8.9207%;"><strong>${down}</strong></th>
+        </tr>
+        </thead>
+        <tbody>
+    `
 
 	// Генерация строк таблицы для каждого файла в порядке, в котором они выбраны пользователем
 	fileInfo.forEach((file, idx) => {
@@ -79,24 +78,20 @@ function generateTable() {
 				: file.ext
 
 		tableHtml += `
-                    <tr>
-                    <td style="text-align: center; width: 4.40639%;">${
-											idx + 1
-										}</td>
-                    <td style="text-align: center; width: 86.6979%;">${
-											file.name
-										}</td>
-                    <td style="text-align: center; width: 8.9207%;"><a href="${fullPath}" target="_blank" rel="noopener">${typer}</a></td>
-                    </tr>
-                `
+            <tr>
+            <td style="text-align: center; width: 4.40639%;">${idx + 1}</td>
+            <td style="text-align: center; width: 86.6979%;">${file.name}</td>
+            <td style="text-align: center; width: 8.9207%;"><a href="${fullPath}" target="_blank" rel="noopener">${typer}</a></td>
+            </tr>
+        `
 	})
 
 	// Завершение формирования таблицы
 	tableHtml += `
-                </tbody>
-                </table>
-                <p> </p>
-            `
+        </tbody>
+        </table>
+        <p> </p>
+    `
 
 	// Вставка HTML таблицы в элемент с id 'output'
 	document.getElementById('output').innerHTML = tableHtml
@@ -127,7 +122,13 @@ function copyToClipboard() {
 	navigator.clipboard
 		.writeText(htmlCode)
 		.then(() => {
-			// alert('HTML код скопирован в буфер обмена')
+			const copyButton = document.getElementById('copyButton')
+			copyButton.classList.add('success')
+			copyButton.textContent = 'HTML скопирован в буфер обмена'
+			setTimeout(() => {
+				copyButton.classList.remove('success')
+				copyButton.textContent = 'Скопировать HTML в буфер обмена'
+			}, 2000)
 		})
 		.catch(err => {
 			console.error('Ошибка копирования в буфер обмена: ', err)
