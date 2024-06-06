@@ -5,11 +5,11 @@ function cleanName(name) {
 		.replace(/о\.ж/g, 'оқу жылы')
 		.replace(/ож/g, 'оқу жылы')
 
-	// Регулярное выражение для поиска года перед 'оқу жылы'
-	const yearPattern = /(\d{2})-(\d{2})(?=\s*оқу жылы)/g
+	// Регулярное выражение для поиска года в различных форматах
+	const yearPattern = /(\d{2})([\s-]*)(\d{2})/g
 
-	// Замена для корректного года
-	name = name.replace(yearPattern, '20$1-20$2')
+	// Замена годов на корректный формат
+	name = name.replace(yearPattern, '20$1 - 20$3')
 
 	// Замена '-' на ' - '
 	name = name.replace(/-/g, ' - ')
