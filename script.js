@@ -1,6 +1,20 @@
 function cleanName(name) {
-	name = name.replace(/жж/g, 'оқу жылы').replace(/о\.ж/g, 'оқу жылы')
+	// Замены для 'ож', 'жж', и 'о.ж'
+	name = name
+		.replace(/жж/g, 'оқу жылы')
+		.replace(/о\.ж/g, 'оқу жылы')
+		.replace(/ож/g, 'оқу жылы')
+
+	// Регулярное выражение для поиска года перед 'оқу жылы'
+	const yearPattern = /(\d{2})-(\d{2})(?=\s*оқу жылы)/g
+
+	// Замена для корректного года
+	name = name.replace(yearPattern, '20$1-20$2')
+
+	// Замена '-' на ' - '
 	name = name.replace(/-/g, ' - ')
+
+	// Возвращаем строку с заглавной буквы
 	return name.charAt(0).toUpperCase() + name.slice(1)
 }
 
@@ -44,16 +58,16 @@ function generateTable() {
 
 	// Начало формирования HTML таблицы
 	let tableHtml = `
-				<table class="cwd" unsortable>
-				<thead>
-				<tr>
-				<th>№</th>
-				<th>${name}</th>
-				<th>${down}</th>
-				</tr>
-				</thead>
-				<tbody>
-			`
+                <table class="cwd" style="width: 100%;" border="1">
+                <thead>
+                <tr>
+                <th style="background-color: #00b5fc; text-align: center; width: 4.40639%;"><strong>№</strong></th>
+                <th style="background-color: #00b5fc; text-align: center; width: 86.6979%;"><strong>${name}</strong></th>
+                <th style="background-color: #00b5fc; text-align: center; width: 8.9207%;"><strong>${down}</strong></th>
+                </tr>
+                </thead>
+                <tbody>
+            `
 
 	// Генерация строк таблицы для каждого файла в порядке, в котором они выбраны пользователем
 	fileInfo.forEach((file, idx) => {
@@ -65,20 +79,24 @@ function generateTable() {
 				: file.ext
 
 		tableHtml += `
-					<tr>
-					<td>${idx + 1}</td>
-					<td>${file.name}</td>
-					<td><a href="${fullPath}" download>${typer}</a></td>
-					</tr>
-				`
+                    <tr>
+                    <td style="text-align: center; width: 4.40639%;">${
+											idx + 1
+										}</td>
+                    <td style="text-align: center; width: 86.6979%;">${
+											file.name
+										}</td>
+                    <td style="text-align: center; width: 8.9207%;"><a href="${fullPath}" target="_blank" rel="noopener">${typer}</a></td>
+                    </tr>
+                `
 	})
 
 	// Завершение формирования таблицы
 	tableHtml += `
-				</tbody>
-				</table>
-				<p> </p>
-			`
+                </tbody>
+                </table>
+                <p> </p>
+            `
 
 	// Вставка HTML таблицы в элемент с id 'output'
 	document.getElementById('output').innerHTML = tableHtml
