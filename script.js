@@ -127,7 +127,7 @@ function copyToClipboard() {
 	navigator.clipboard
 		.writeText(htmlCode)
 		.then(() => {
-			alert('HTML код скопирован в буфер обмена')
+			// alert('HTML код скопирован в буфер обмена')
 		})
 		.catch(err => {
 			console.error('Ошибка копирования в буфер обмена: ', err)
