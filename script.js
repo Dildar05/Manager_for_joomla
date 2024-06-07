@@ -77,12 +77,11 @@ function generateTable() {
 	        </thead>
 	        <tbody>
 	    `
+	} else {
+		tableHtml = document
+			.getElementById('output')
+			.innerHTML.replace('</tbody></table>', '')
 	}
-	// else {
-	// 	tableHtml = document
-	// 		.getElementById('output')
-	// 		.innerHTML.replace('</tbody></table>', '')
-	// }
 
 	// Генерация строк таблицы для каждого файла в порядке, в котором они выбраны пользователем
 	fileInfo.forEach((file, idx) => {
@@ -104,14 +103,16 @@ function generateTable() {
 	})
 
 	// Завершение формирования таблицы
-	tableHtml += `
+	if (actionType === 1) {
+		tableHtml += `
 	    </tbody>
 	    </table>
 	    <p> </p>
 	`
+		// Вставка HTML таблицы в элемент с id 'output'
+		document.getElementById('output').innerHTML = tableHtml
+	}
 
-	// Вставка HTML таблицы в элемент с id 'output'
-	document.getElementById('output').innerHTML = tableHtml
 	// Вставка HTML кода таблицы в элемент с id 'htmlCode' для отображения
 	document.getElementById('htmlCode').textContent = tableHtml
 
