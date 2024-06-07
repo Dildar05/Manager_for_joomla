@@ -114,7 +114,7 @@ function generateTable() {
 	txtDownloadLink.innerText = 'Скачать output.txt'
 
 	// Добавление ссылки для скачивания текстового файла в элемент с id 'output'
-	document.getElementById('output').appendChild(txtDownloadLink)
+	document.getElementById('output2').appendChild(txtDownloadLink)
 }
 
 function copyToClipboard() {

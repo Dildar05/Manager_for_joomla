@@ -3,8 +3,27 @@ body {
 	margin: 20px;
 }
 .container {
+	position: relative;
+	max-height: 100vh;
+}
+.titles {
 	display: flex;
-	height: 100vh;
+	justify-content: space-between;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background-color: #7d7d7d;
+	padding: 10px;
+}
+h2 {
+	flex: 1;
+	overflow-y: auto;
+}
+.main {
+	margin-top: 100px;
+	display: flex;
+	height: calc(100vh - 100px); /* Adjust height to fit within viewport */
 }
 .left,
 .center,
@@ -12,6 +31,7 @@ body {
 	flex: 1;
 	padding: 10px;
 	overflow-y: auto;
+	height: 100%; /* Ensure the sections fill the available height */
 }
 .right {
 	border-left: 1px solid #000;
@@ -63,4 +83,12 @@ pre {
 	white-space: pre-wrap;
 	background-color: #f4f4f4;
 	padding: 10px;
+}
+.output A {
+	display: inline-block;
+	margin-top: 15px;
+	text-decoration: none;
+	color: white;
+	background-color: black;
+	padding: 5px;
 }

@@ -8,50 +8,55 @@
 	</head>
 	<body>
 		<div class="container">
-			<div class="left">
-				<h1>File Manager</h1>
-				<label>
-					Путь к файлам:
-					<input type="file" id="filePicker" multiple />
-				</label>
-
-				<label>
-					Каталог медиа менеджера:
-					<input type="text" id="mediaManagerPath" />
-				</label>
-				<label>
-					Тип сайта:
-					<select id="siteType">
-						<option value="1">Подсайт</option>
-						<option value="2">Сайт</option>
-					</select>
-				</label>
-				<label>
-					Тип менеджера:
-					<select id="managerType">
-						<option value="1">images-new</option>
-						<option value="2">images</option>
-					</select>
-				</label>
-				<label>
-					Язык:
-					<select id="langType">
-						<option value="1">Қазақ</option>
-						<option value="2">Русский</option>
-					</select>
-				</label>
-				<button onclick="generateTable()">Сгенерировать таблицу</button>
-				<button id="copyButton" onclick="copyToClipboard()">
-					Скопировать HTML в буфер обмена
-				</button>
-			</div>
-			<div class="center">
+			<div class="titles">
+				<h2>File Manager</h2>
 				<h2>HTML Код Таблицы</h2>
-				<pre id="htmlCode"></pre>
-			</div>
-			<div class="right">
 				<h2>Визуализация таблицы</h2>
-				<div id="output"></div>
+			</div>
+			<div class="main">
+				<div class="left">
+					<label>
+						Путь к файлам:
+						<input type="file" id="filePicker" multiple />
+					</label>
+
+					<label>
+						Каталог медиа менеджера:
+						<input type="text" id="mediaManagerPath" />
+					</label>
+					<label>
+						Тип сайта:
+						<select id="siteType">
+							<option value="1">Подсайт</option>
+							<option value="2">Сайт</option>
+						</select>
+					</label>
+					<label>
+						Тип менеджера:
+						<select id="managerType">
+							<option value="1">images-new</option>
+							<option value="2">images</option>
+						</select>
+					</label>
+					<label>
+						Язык:
+						<select id="langType">
+							<option value="1">Қазақ</option>
+							<option value="2">Русский</option>
+						</select>
+					</label>
+					<button onclick="generateTable()">Сгенерировать таблицу</button>
+					<button id="copyButton" onclick="copyToClipboard()">
+						Скопировать HTML в буфер обмена
+					</button>
+					<div class="output" id="output2"></div>
+				</div>
+				<div class="center">
+					<pre id="htmlCode"></pre>
+				</div>
+				<div class="right">
+					<div id="output"></div>
+				</div>
 			</div>
 		</div>
 		<script src="script.js"></script>
