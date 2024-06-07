@@ -1,0 +1,39 @@
+.labels_table {
+	border: 2px solid rgb(46, 46, 84);
+	border-radius: 5px;
+	padding: 5px;
+	padding-left: 10px;
+	background-color: #007bff;
+	color: #fff;
+	text-align: center;
+	font-size: 22px;
+}
+.inputs_table {
+	outline: none;
+	border: none;
+	background: transparent;
+	backdrop-filter: blur(10px);
+	border-bottom: 2px solid #fff;
+}
+.select_table {
+	outline: none;
+	background: none;
+	backdrop-filter: blur(10px);
+	color: #fff;
+	font-size: 18px;
+	border: none;
+	border-bottom: 2px solid #fff;
+}
+option {
+	color: #fff;
+	background-color: #10005e;
+	backdrop-filter: blur(20px);
+	border: 2px solis #10005e;
+}
+pre {
+	color: #fff;
+	background: none;
+}
+.right {
+	color: #fff;
+}

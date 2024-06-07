@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>File Manager</title>
 		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="script_style.css" />
 	</head>
 	<body>
 		<div class="container">
@@ -15,41 +16,65 @@
 			</div>
 			<div class="main">
 				<div class="left">
-					<label>
+					<label class="labels_table file_input">
 						Путь к файлам:
-						<input type="file" id="filePicker" multiple />
+						<input
+							class="inputs_table select_table"
+							type="file"
+							id="filePicker"
+							multiple
+						/>
 					</label>
 
-					<label>
+					<label class="labels_table">
 						Каталог медиа менеджера:
-						<input type="text" id="mediaManagerPath" />
+						<input class="inputs_table" type="text" id="mediaManagerPath" />
 					</label>
-					<label>
+					<label class="labels_table">
 						Тип сайта:
-						<select id="siteType">
+						<select class="select_table" id="siteType">
 							<option value="1">Подсайт</option>
 							<option value="2">Сайт</option>
 						</select>
 					</label>
-					<label>
+					<label class="labels_table">
 						Тип менеджера:
-						<select id="managerType">
+						<select class="c select_table" id="managerType">
 							<option value="1">images-new</option>
 							<option value="2">images</option>
 						</select>
 					</label>
-					<label>
+					<label class="labels_table">
 						Язык:
-						<select id="langType">
+						<select class="select_table" id="langType">
 							<option value="1">Қазақ</option>
 							<option value="2">Русский</option>
 						</select>
+					</label>
+					<label class="labels_table">
+						Действие:
+						<select class="select_table" id="actionType">
+							<option value="1">Создать новую таблицу</option>
+							<option value="2">Дополнить таблицу</option>
+						</select>
+					</label>
+					<label
+						class="labels_table"
+						id="startIndexLabel"
+						style="display: none"
+					>
+						Начальный индекс:
+						<input
+							class="inputs_table"
+							type="number"
+							id="startIndex"
+							value="1"
+						/>
 					</label>
 					<button onclick="generateTable()">Сгенерировать таблицу</button>
 					<button id="copyButton" onclick="copyToClipboard()">
 						Скопировать HTML в буфер обмена
 					</button>
-					<div class="output" id="output2"></div>
 				</div>
 				<div class="center">
 					<pre id="htmlCode"></pre>

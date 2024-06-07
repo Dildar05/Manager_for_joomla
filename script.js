@@ -13,6 +13,14 @@ function cleanName(name) {
 	const yearPattern = /\b(\d{2})\s*-\s*(\d{2})\b(?! - \d{4})/g
 	name = name.replace(yearPattern, '20$1 - 20$2')
 
+	// Замена форматов 2021- 22, 2021 - 22, 2021 -22 на 2021 - 2022
+	const fullYearPattern1 = /(\d{4})\s*-\s*(\d{2})\b/g
+	name = name.replace(fullYearPattern1, '$1 - 20$2')
+
+	// Замена форматов 21 -2022, 21 - 2022, 21- 2022 на 2021 - 2022
+	const fullYearPattern2 = /\b(\d{2})\s*-\s*(\d{4})/g
+	name = name.replace(fullYearPattern2, '20$1 - $2')
+
 	// Возвращаем строку с заглавной буквы
 	return name.charAt(0).toUpperCase() + name.slice(1)
 }
@@ -23,7 +31,8 @@ function generateTable() {
 	const siteType = parseInt(document.getElementById('siteType').value)
 	const managerType = parseInt(document.getElementById('managerType').value)
 	const languageType = parseInt(document.getElementById('langType').value)
-
+	const actionType = parseInt(document.getElementById('actionType').value)
+	const startIndex = parseInt(document.getElementById('startIndex').value)
 	// Удаление всех конечных слэшей из пути
 	mediaManagerPath = mediaManagerPath.replace(/\/+$/, '')
 
@@ -55,22 +64,30 @@ function generateTable() {
 		down = 'Скачать'
 	}
 
-	// Начало формирования HTML таблицы
-	let tableHtml = `
-        <table class="cwd" style="width: 100%;" border="1">
-        <thead>
-        <tr>
-        <th style="background-color: #00b5fc; text-align: center; width: 4.40639%;"><strong>№</strong></th>
-        <th style="background-color: #00b5fc; text-align: center; width: 86.6979%;"><strong>${name}</strong></th>
-        <th style="background-color: #00b5fc; text-align: center; width: 8.9207%;"><strong>${down}</strong></th>
-        </tr>
-        </thead>
-        <tbody>
-    `
+	let tableHtml = ``
+	if (actionType === 1) {
+		tableHtml = `
+	        <table class="cwd" style="width: 100%;" border="1">
+	        <thead>
+	        <tr>
+	        <th style="background-color: #00b5fc; text-align: center; width: 4.40639%;"><strong>№</strong></th>
+	        <th style="background-color: #00b5fc; text-align: center; width: 86.6979%;"><strong>${name}</strong></th>
+	        <th style="background-color: #00b5fc; text-align: center; width: 8.9207%;"><strong>${down}</strong></th>
+	        </tr>
+	        </thead>
+	        <tbody>
+	    `
+	}
+	// else {
+	// 	tableHtml = document
+	// 		.getElementById('output')
+	// 		.innerHTML.replace('</tbody></table>', '')
+	// }
 
 	// Генерация строк таблицы для каждого файла в порядке, в котором они выбраны пользователем
 	fileInfo.forEach((file, idx) => {
-		const fullPath = `${mediaManagerPath}/${idx + 1}.${file.ext.toLowerCase()}`
+		const index = actionType === 1 ? idx + 1 : startIndex + idx
+		const fullPath = `${mediaManagerPath}/${index}.${file.ext.toLowerCase()}`
 		const manager = managerType !== 1 ? 'images' : 'images-new'
 		const typer =
 			siteType !== 1
@@ -78,20 +95,20 @@ function generateTable() {
 				: file.ext
 
 		tableHtml += `
-            <tr>
-            <td style="text-align: center; width: 4.40639%;">${idx + 1}</td>
-            <td style="text-align: center; width: 86.6979%;">${file.name}</td>
-            <td style="text-align: center; width: 8.9207%;"><a href="${fullPath}" target="_blank" rel="noopener">${typer}</a></td>
-            </tr>
-        `
+	        <tr>
+	        <td style="text-align: center; width: 4.40639%;">${index}</td>
+	        <td style="text-align: center; width: 86.6979%;">${file.name}</td>
+	        <td style="text-align: center; width: 8.9207%;"><a href="${fullPath}" target="_blank" rel="noopener">${typer}</a></td>
+	        </tr>
+	    `
 	})
 
 	// Завершение формирования таблицы
 	tableHtml += `
-        </tbody>
-        </table>
-        <p> </p>
-    `
+	    </tbody>
+	    </table>
+	    <p> </p>
+	`
 
 	// Вставка HTML таблицы в элемент с id 'output'
 	document.getElementById('output').innerHTML = tableHtml
@@ -106,17 +123,15 @@ function generateTable() {
 	let outputTxtBlob = new Blob([outputTxtContent], { type: 'text/plain' })
 	// Создание URL для скачивания текстового файла
 	let outputTxtUrl = URL.createObjectURL(outputTxtBlob)
-
-	// Создание ссылки для скачивания текстового файла
-	let txtDownloadLink = document.createElement('a')
-	txtDownloadLink.href = outputTxtUrl
-	txtDownloadLink.download = 'output.txt'
-	txtDownloadLink.innerText = 'Скачать output.txt'
-
-	// Добавление ссылки для скачивания текстового файла в элемент с id 'output'
-	document.getElementById('output2').appendChild(txtDownloadLink)
 }
-
+document.getElementById('actionType').addEventListener('change', function () {
+	const startIndexLabel = document.getElementById('startIndexLabel')
+	if (this.value === '2') {
+		startIndexLabel.style.display = 'block'
+	} else {
+		startIndexLabel.style.display = 'none'
+	}
+})
 function copyToClipboard() {
 	const htmlCode = document.getElementById('htmlCode').textContent
 	navigator.clipboard
